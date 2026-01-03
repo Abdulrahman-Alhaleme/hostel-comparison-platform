@@ -27,7 +27,7 @@ async def analyze_single_hostel(request: AnalysisRequest, current_user: dict = D
     if not hostel:
         raise HTTPException(status_code=404, detail="Hostel not found")
         
-    # Construct AI Prompt
+    # بناء موجه الذكاء الاصطناعي
     prompt = f"""
     You are an AI travel assistant. Analyze the following hostel and provide a summary, list of advantages (pros), and list of disadvantages (cons).
 
@@ -77,7 +77,7 @@ async def analyze_single_hostel(request: AnalysisRequest, current_user: dict = D
         
     except Exception as e:
         print(f"AI Analysis Error: {e}")
-        # Fallback
+        # احتياطي
         return AnalysisResponse(
             summary="AI Analysis unavailable at the moment.",
             pros=["Price: $" + str(hostel.get('price_per_night')), "Rating: " + str(hostel.get('rating'))],

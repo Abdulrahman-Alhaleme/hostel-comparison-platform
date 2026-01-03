@@ -25,7 +25,7 @@ const Compare = () => {
     const [minRating, setMinRating] = useState('');
     const [showFilters, setShowFilters] = useState(false);
 
-    // Fetch functionality
+    // وظيفة الجلب
     const searchHostels = async (query, country, setResults) => {
         try {
             const params = { country };
@@ -44,7 +44,7 @@ const Compare = () => {
         }
     };
 
-    // Initial load and search effects
+    // تأثيرات التحميل الأولي والبحث
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             searchHostels(search1, 'USA', setResults1);
@@ -59,7 +59,7 @@ const Compare = () => {
         return () => clearTimeout(timeoutId);
     }, [search2, token, minPrice, maxPrice, minRating]);
 
-    // Load historical comparison if ID is present
+    // تحميل المقارنة التاريخية إذا كان المعرف موجودًا
     useEffect(() => {
         const fetchComparison = async () => {
             if (!id || !token) return;
@@ -70,7 +70,7 @@ const Compare = () => {
                 });
                 setComparisonResult(res.data);
 
-                // Mock selections for UI rendering if names are available
+                // اختيارات وهمية لعرض واجهة المستخدم إذا كانت الأسماء متاحة
                 if (res.data.hostel_names && res.data.hostel_names.length === 2) {
                     setSelection1({ name: res.data.hostel_names[0], city: 'History', country: '', price_per_night: 0, rating: 0 });
                     setSelection2({ name: res.data.hostel_names[1], city: 'History', country: '', price_per_night: 0, rating: 0 });
@@ -157,7 +157,7 @@ const Compare = () => {
             return renderHostelCard(selection, () => setSelection(null));
         }
 
-        // Filter out the *other* selected hostel from results if present
+        // تصفية بيت الشباب المختار *الآخر* من النتائج إذا كان موجودًا
         const filtered = results.filter(h =>
             otherSelection ? h.id !== otherSelection.id : true
         );
@@ -279,7 +279,7 @@ const Compare = () => {
 
             {!comparisonResult ? (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', alignItems: 'start' }}>
-                    {/* Column 1 - USA */}
+                    {/* العمود 1 - الولايات المتحدة */}
                     <div>
                         <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--text-muted)' }}>United States</h2>
                         {renderSearchColumn(
@@ -293,7 +293,7 @@ const Compare = () => {
                         )}
                     </div>
 
-                    {/* Column 2 - Canada */}
+                    {/* العمود 2 - كندا */}
                     <div>
                         <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--text-muted)' }}>Canada</h2>
                         {renderSearchColumn(
@@ -317,7 +317,7 @@ const Compare = () => {
                 </div>
             )}
 
-            {/* Results Area */}
+            {/* منطقة النتائج */}
             {comparisonResult && (
                 <motion.div
                     id="comparison-result"
@@ -404,7 +404,7 @@ const Compare = () => {
                                 </div>
                             ) : (
                                 (() => {
-                                    // Simple parser for the AI output
+                                    // محلل بسيط لمخرجات الذكاء الاصطناعي
                                     const text = comparisonResult.analysis || '';
                                     const lines = text.split('\n');
                                     const points = [];
@@ -423,7 +423,7 @@ const Compare = () => {
                                         } else if (currentPoint) {
                                             currentPoint.content += '\n' + line;
                                         } else if (line.trim()) {
-                                            // Intro text
+                                            // نص المقدمة
                                             if (!points.find(p => p.id === 'intro')) {
                                                 points.push({ id: 'intro', title: 'Overview', content: line });
                                             } else {

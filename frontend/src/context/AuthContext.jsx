@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
     }, [token]);
 
     const login = async (username, password) => {
-        // In real app, form-data format is used by OAuth2PasswordRequestForm
+        // في التطبيق الحقيقي، يتم استخدام تنسيق form-data بواسطة OAuth2PasswordRequestForm
         const formData = new FormData();
         formData.append('username', username);
         formData.append('password', password);
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
         setToken(res.data.access_token);
         localStorage.setItem('token', res.data.access_token);
 
-        // Fetch user immediately
+        // جلب المستخدم فوراً
         const userRes = await axios.get('http://localhost:8000/api/auth/me', {
             headers: { Authorization: `Bearer ${res.data.access_token}` }
         });

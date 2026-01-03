@@ -11,14 +11,14 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    // Filters for Hotel List
+    // فلاتر لقائمة الفنادق
     const [search, setSearch] = useState('');
     const [country, setCountry] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [minRating, setMinRating] = useState('');
 
-    // Fetch Hostels for Main View
+    // جلب بيوت الشباب للعرض الرئيسي
     useEffect(() => {
         const fetchHostels = async () => {
             setLoading(true);
@@ -46,7 +46,7 @@ const Dashboard = () => {
         };
 
         const timeoutId = setTimeout(() => {
-            if (token) fetchHostels(); // Only fetch if token exists
+            if (token) fetchHostels(); // الجلب فقط في حالة وجود رمز مميز
         }, 500);
 
         return () => clearTimeout(timeoutId);
@@ -64,7 +64,7 @@ const Dashboard = () => {
                 </div>
             </header>
 
-            {/* MAIN CONTENT: HOSTEL EXPLORER */}
+            {/* المحتوى الرئيسي: مستكشف بيوت الشباب */}
             <section style={{ marginBottom: '4rem' }}>
                 <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <Search size={22} /> Explore Hostels
@@ -72,7 +72,7 @@ const Dashboard = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: '2rem' }}>
 
-                    {/* FILTERS SIDEBAR */}
+                    {/* شريط الفلاتر الجانبي */}
                     <div className="glass-panel" style={{ padding: '1.5rem', height: 'fit-content' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', color: 'var(--primary)' }}>
                             <Filter size={20} />
@@ -122,7 +122,7 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    {/* HOSTEL GRID */}
+                    {/* شبكة بيوت الشباب */}
                     <div>
                         {loading ? (
                             <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>Loading hostels...</div>
@@ -147,7 +147,7 @@ const Dashboard = () => {
                                                 {hostel.address ? <span title={hostel.address} style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hostel.address}</span> : `${hostel.city}, ${hostel.country}`}
                                             </div>
 
-                                            {/* Facilities Tags */}
+                                            {/* وسوم المرافق */}
                                             <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.8rem' }}>
                                                 {hostel.facilities && hostel.facilities.slice(0, 3).map((fac, i) => (
                                                     <span key={i} style={{ fontSize: '0.75rem', background: 'var(--glass-border)', padding: '2px 6px', borderRadius: '4px', color: 'var(--text-muted)' }}>
@@ -159,7 +159,7 @@ const Dashboard = () => {
                                                 )}
                                             </div>
 
-                                            {/* Contact Info Row */}
+                                            {/* صف معلومات الاتصال */}
                                             <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.8rem' }}>
                                                 {hostel.phone_number && (
                                                     <a href={`tel:${hostel.phone_number}`} title={hostel.phone_number} style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.85rem', textDecoration: 'none' }}>

@@ -25,14 +25,14 @@ async def compare_hostels(request: CompareRequest, current_user: dict = Depends(
     if len(request.hostel_ids) != 2:
         raise HTTPException(status_code=400, detail="Please select exactly two hostels to compare.")
     
-    # Fetch hostels
+    # جلب بيوت الشباب
     hostel1 = await db.hostels.find_one({"_id": ObjectId(request.hostel_ids[0])})
     hostel2 = await db.hostels.find_one({"_id": ObjectId(request.hostel_ids[1])})
     
     if not hostel1 or not hostel2:
         raise HTTPException(status_code=404, detail="One or both hostels not found.")
         
-    # Construct AI Prompt
+    # بناء موجه الذكاء الاصطناعي
     prompt = f"""
     You are an AI travel assistant specializing in hostels. Compare the following two hostels.
 
@@ -68,7 +68,7 @@ async def compare_hostels(request: CompareRequest, current_user: dict = Depends(
     """
     
     try:
-        # Initialize Groq Client
+        # تهيئة عميل Groq
         client = AsyncGroq(api_key=settings.GROQ_API_KEY)
         
         chat_completion = await client.chat.completions.create(
@@ -94,7 +94,7 @@ async def compare_hostels(request: CompareRequest, current_user: dict = Depends(
             detailed_analysis = data.get("detailed_analysis", "")
             comparison_table = data.get("comparison_table", [])
             
-            # Save to database
+            # الحفظ في قاعدة البيانات
             comparison_doc = {
                 "user_id": current_user["_id"],
                 "hostel_ids": [hostel1["_id"], hostel2["_id"]],
@@ -126,7 +126,7 @@ async def compare_hostels(request: CompareRequest, current_user: dict = Depends(
         error_msg = str(e)
         print(f"AI Error Detailed: {error_msg}")
         
-        # Fallback Mock Response
+        # استجابة وهمية احتياطية
         mock_analysis = f"""
         (Unable to connect to AI Service. Error: {error_msg})
         

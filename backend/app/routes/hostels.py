@@ -12,7 +12,7 @@ async def get_hostels(search: str = None, country: str = None, min_price: float 
     if country:
         query["country"] = country
     if search:
-        # Case-insensitive regex search on name
+        # بحث regex غير حساس لحالة الأحرف في الاسم
         query["name"] = {"$regex": search, "$options": "i"}
     
     if min_price is not None or max_price is not None:
@@ -25,8 +25,8 @@ async def get_hostels(search: str = None, country: str = None, min_price: float 
     if min_rating is not None:
         query["rating"] = {"$gte": min_rating}
 
-    # If a search/filter is active, we might want more results, but let's cap at 50 to be safe
-    # If no search, just return top 20 to avoid overwhelming
+    # إذا كان البحث/التصفية نشطًا، قد نحتاج لمزيد من النتائج، لكن لنضع الحد الأقصى عند 50 للأمان
+    # إذا لم يكن هناك بحث، أعد فقط أفضل 20 لتجنب التحميل الزائد
     limit = 50 if search or country or min_price or max_price or min_rating else 20
     
     hostels = await db.hostels.find(query).to_list(limit)

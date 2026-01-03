@@ -10,14 +10,14 @@ load_dotenv()
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
 DB_NAME = os.getenv("DB_NAME", "hostel_db")
 
-# Mapping star ratings to numbers
+# تعيين تصنيفات النجوم إلى أرقام
 RATING_MAP = {
     "OneStar": 1.0,
     "TwoStar": 2.0,
     "ThreeStar": 3.0,
     "FourStar": 4.0,
     "FiveStar": 5.0,
-    "All": 3.0 # Fallback
+    "All": 3.0 # احتياطي
 }
 
 def parse_rating(rating_str):
@@ -28,24 +28,24 @@ async def import_data():
     db = client[DB_NAME]
     collection = db["hostels"]
     
-    # Clear existing data
+    # مسح البيانات الموجودة
     print("Clearing existing data...")
     await collection.delete_many({})
     
     # Path to CSV
-    # Path to CSV - Uses relative path from the script location
-    # Assuming script is in backend/ and CSV is in root
+    # مسار ملف CSV - يستخدم المسار النسبي من موقع السكريبت
+    # بافتراض أن السكريبت في backend/ وملف CSV في الجذر
     current_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(current_dir)
     csv_path = os.path.join(project_root, "hotels_Data.csv")
     
     count = 0
     with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
-        # Handle potential null bytes
+        # التعامل مع البايتات الفارغة المحتملة
         lines = (line.replace('\0', '') for line in f)
         reader = csv.DictReader(lines)
         
-        # Clean headers (strip whitespace)
+        # تنظيف العناوين (إزالة المسافات البيضاء)
         if reader.fieldnames:
             reader.fieldnames = [name.strip() for name in reader.fieldnames]
         
@@ -53,11 +53,11 @@ async def import_data():
         
         batch = []
         for row in reader:
-            # Map Row to Model using cleaned keys
-            # Expecting: countyName, cityName, HotelName, HotelRating, Address, Description
+            # تعيين الصف إلى النموذج باستخدام المفاتيح المنظفة
+            # المتوقع: countyName, cityName, HotelName, HotelRating, Address, Description
             
             raw_country = row.get('countyName', 'Unknown')
-            # Normalize country
+            # توحيد اسم الدولة
             if raw_country.strip() in ['United States', 'USA', 'US']:
                 country = 'USA'
             elif raw_country.strip() in ['Canada', 'CA']:
@@ -68,7 +68,7 @@ async def import_data():
             name = row.get('HotelName', 'Unknown Hotel')
             city = row.get('cityName', 'Unknown City')
             
-            # Rating
+            # التقييم
             raw_rating = row.get('HotelRating', '')
             rating = parse_rating(raw_rating)
             if rating == 0:
@@ -77,15 +77,15 @@ async def import_data():
                 except:
                      rating = 3.5
             
-            # Price (Randomized)
+            # السعر (عشوائي)
             price = round(random.uniform(20.0, 150.0), 2)
             
-            # Desc & Address
+            # الوصف والعنوان
             desc = row.get('Description', '')
             address = row.get('Address', '')
             full_desc = desc # kept original description separate from address now
             
-            # Facilities
+            # المرافق
             raw_facilities = row.get('HotelFacilities', '')
             if raw_facilities and raw_facilities.lower() != 'null':
                 facilities = [f.strip() for f in raw_facilities.split(',') if f.strip()]

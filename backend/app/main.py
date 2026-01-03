@@ -5,8 +5,8 @@ from app.routes import auth, hostels, compare, analysis
 app = FastAPI(title="Hostel Comparison Platform API")
 
 origins = [
-    "http://localhost:5173", # Vite default
-    "http://localhost:5174", # Vite alternate
+    "http://localhost:5173", # افتراضي Vite
+    "http://localhost:5174", # بديل Vite
     "http://localhost:3000",
 ]
 

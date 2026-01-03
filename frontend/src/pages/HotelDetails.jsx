@@ -19,7 +19,7 @@ const HotelDetails = () => {
                 const res = await axios.get(`http://localhost:8000/api/hostels/${id}`, { headers });
                 setHotel(res.data);
 
-                // Trigger Analysis
+                // تشغيل التحليل
                 fetchAnalysis(res.data.id, headers);
             } catch (error) {
                 console.error("Error fetching hotel:", error);
@@ -58,7 +58,7 @@ const HotelDetails = () => {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
 
-                {/* Header Section */}
+                {/* قسم الرأس */}
                 <div className="glass-panel" style={{ padding: '2rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                         <div>
@@ -75,7 +75,7 @@ const HotelDetails = () => {
                     </div>
                 </div>
 
-                {/* AI Analysis Card - Noon Style (Theme Aware) */}
+                {/* بطاقة تحليل الذكاء الاصطناعي - على غرار Noon (متوافقة مع السمة) */}
                 <motion.div
                     className="glass-panel"
                     initial={{ opacity: 0, y: 20 }}
@@ -106,13 +106,13 @@ const HotelDetails = () => {
                                 <div style={{ color: 'var(--text-muted)' }}>Analyzing reviews...</div>
                             ) : (
                                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                    {/* Summary */}
+                                    {/* الملخص */}
                                     <li style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', color: 'var(--text-main)', lineHeight: '1.6' }}>
                                         <div style={{ marginTop: '0.25rem', minWidth: '6px', height: '6px', borderRadius: '50%', background: 'var(--text-main)' }}></div>
                                         {analysis?.summary}
                                     </li>
 
-                                    {/* Pros */}
+                                    {/* المميزات */}
                                     {analysis?.pros.map((pro, index) => (
                                         <li key={`pro-${index}`} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', color: 'var(--text-main)', lineHeight: '1.6' }}>
                                             <div style={{ marginTop: '0.25rem', minWidth: '6px', height: '6px', borderRadius: '50%', background: 'var(--text-main)' }}></div>
@@ -120,7 +120,7 @@ const HotelDetails = () => {
                                         </li>
                                     ))}
 
-                                    {/* Cons */}
+                                    {/* العيوب */}
                                     {analysis?.cons.map((con, index) => (
                                         <li key={`con-${index}`} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', color: 'var(--text-main)', lineHeight: '1.6' }}>
                                             <div style={{ marginTop: '0.25rem', minWidth: '6px', height: '6px', borderRadius: '50%', background: 'var(--text-main)' }}></div>
