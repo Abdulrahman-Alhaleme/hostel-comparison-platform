@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import auth, hostels, compare
+from app.routes import auth, hostels, compare, analysis
 
 app = FastAPI(title="Hostel Comparison Platform API")
 
@@ -21,6 +21,7 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(hostels.router, prefix="/api/hostels", tags=["Hostels"])
 app.include_router(compare.router, prefix="/api/compare", tags=["Compare"])
+app.include_router(analysis.router, prefix="/api/analysis", tags=["Analysis"])
 
 @app.get("/")
 def read_root():

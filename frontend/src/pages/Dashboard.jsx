@@ -135,7 +135,9 @@ const Dashboard = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: index * 0.05 }}
                                         className="glass-panel"
-                                        style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+                                        onClick={() => navigate(`/hotel/${hostel.id}`)}
+                                        style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', cursor: 'pointer' }}
+                                        whileHover={{ y: -5, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
                                     >
                                         <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
                                             <h3 style={{ marginBottom: '0.5rem', fontSize: '1.1rem' }}>{hostel.name}</h3>

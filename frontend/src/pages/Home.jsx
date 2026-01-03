@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
+    const { user } = useAuth();
     return (
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 2rem', textAlign: 'center' }}>
             <motion.div
@@ -21,8 +23,14 @@ const Home = () => {
                     Compare hostels powered by AI. Get personalized recommendations based on price, safety, social atmosphere, and more.
                 </p>
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                    <Link to="/register" className="btn-primary" style={{ textDecoration: 'none', padding: '1rem 2rem', fontSize: '1.1rem' }}>Start Comparing</Link>
-                    <Link to="/login" className="btn-secondary" style={{ textDecoration: 'none', padding: '1rem 2rem', fontSize: '1.1rem' }}>Login</Link>
+                    {user ? (
+                        <Link to="/compare" className="btn-primary" style={{ textDecoration: 'none', padding: '1rem 2rem', fontSize: '1.1rem' }}>Start Comparing</Link>
+                    ) : (
+                        <>
+                            <Link to="/register" className="btn-primary" style={{ textDecoration: 'none', padding: '1rem 2rem', fontSize: '1.1rem' }}>Start Comparing</Link>
+                            <Link to="/login" className="btn-secondary" style={{ textDecoration: 'none', padding: '1rem 2rem', fontSize: '1.1rem' }}>Login</Link>
+                        </>
+                    )}
                 </div>
             </motion.div>
 

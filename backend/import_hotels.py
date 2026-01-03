@@ -33,7 +33,11 @@ async def import_data():
     await collection.delete_many({})
     
     # Path to CSV
-    csv_path = r"c:\Users\ONE BY ONE\OneDrive\Desktop\hostel-comparison-platform\hotels_Data.csv"
+    # Path to CSV - Uses relative path from the script location
+    # Assuming script is in backend/ and CSV is in root
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(current_dir)
+    csv_path = os.path.join(project_root, "hotels_Data.csv")
     
     count = 0
     with open(csv_path, 'r', encoding='utf-8', errors='replace') as f:
