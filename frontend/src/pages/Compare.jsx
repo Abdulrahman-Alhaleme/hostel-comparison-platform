@@ -114,7 +114,7 @@ const Compare = () => {
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
             pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save('hostel_comparison.pdf');
+            pdf.save('hotel_comparison.pdf');
         });
     };
 
@@ -214,7 +214,7 @@ const Compare = () => {
 
     return (
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
-            <h1 style={{ marginBottom: '2rem' }}>Compare Hostels</h1>
+            <h1 style={{ marginBottom: '2rem' }}>Compare Hotels</h1>
 
             <div style={{ marginBottom: '2rem' }}>
                 <button

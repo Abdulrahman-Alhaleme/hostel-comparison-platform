@@ -17,10 +17,10 @@ const Home = () => {
                         background: 'linear-gradient(to right, #a78bfa, #38bdf8)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent'
-                    }}>Hostel Match</span>
+                    }}>Hotel Match</span>
                 </h1>
                 <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 3rem auto' }}>
-                    Compare hostels powered by AI. Get personalized recommendations based on price, safety, social atmosphere, and more.
+                    Compare hotels powered by AI. Get personalized recommendations based on price, safety, social atmosphere, and more.
                 </p>
                 <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                     {user ? (
@@ -37,7 +37,7 @@ const Home = () => {
             <div style={{ marginTop: '5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                 {[
                     { title: "AI-Powered Analysis", desc: "Our AI breaks down reviews and descriptions to find hidden gems." },
-                    { title: "Direct Comparison", desc: "See two hostels side-by-side with clear winner declarations." },
+                    { title: "Direct Comparison", desc: "See two hotels side-by-side with clear winner declarations." },
                     { title: "Personalized", desc: "The more you use it, the better the recommendations get." }
                 ].map((feature, idx) => (
                     <motion.div

@@ -20,7 +20,7 @@ const Navbar = () => {
         }}>
             <Link to="/" style={{ textDecoration: 'none', color: 'var(--text-main)' }}>
                 <h2 style={{ margin: 0, fontSize: '1.5rem', background: 'linear-gradient(to right, #a78bfa, #38bdf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                    HostelAI
+                    World Hotel
                 </h2>
             </Link>
 

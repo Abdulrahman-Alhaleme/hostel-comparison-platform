@@ -67,7 +67,7 @@ const Dashboard = () => {
             {/* المحتوى الرئيسي: مستكشف بيوت الشباب */}
             <section style={{ marginBottom: '4rem' }}>
                 <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Search size={22} /> Explore Hostels
+                    <Search size={22} /> Explore Hotels
                 </h2>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: '2rem' }}>
@@ -125,7 +125,7 @@ const Dashboard = () => {
                     {/* شبكة بيوت الشباب */}
                     <div>
                         {loading ? (
-                            <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>Loading hostels...</div>
+                            <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>Loading hotels...</div>
                         ) : hostels.length > 0 ? (
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
                                 {hostels.map((hostel, index) => (
@@ -193,7 +193,7 @@ const Dashboard = () => {
                             </div>
                         ) : (
                             <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center' }}>
-                                <h3>No hostels found</h3>
+                                <h3>No hotels found</h3>
                                 <p style={{ color: 'var(--text-muted)' }}>Try adjusting your filters</p>
                             </div>
                         )}

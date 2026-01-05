@@ -84,7 +84,7 @@ const HotelDetails = () => {
                 >
                     <div style={{ padding: '2rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                            <h2 style={{ margin: 0, fontSize: '1.8rem' }}>Hostel Ratings & Review Summary</h2>
+                            <h2 style={{ margin: 0, fontSize: '1.8rem' }}>Hotel Ratings & Review Summary</h2>
                         </div>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
@@ -99,7 +99,7 @@ const HotelDetails = () => {
 
                         <div style={{ background: 'var(--glass-highlight)', borderRadius: '1rem', padding: '1.5rem' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-                                <span style={{ color: 'var(--primary)', fontWeight: '600', fontSize: '1.1rem' }}>Summarised by HostelAI</span>
+                                <span style={{ color: 'var(--primary)', fontWeight: '600', fontSize: '1.1rem' }}>Summarised by World Hotel</span>
                             </div>
 
                             {analyzing ? (
