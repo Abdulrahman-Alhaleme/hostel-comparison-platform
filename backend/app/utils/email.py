@@ -21,6 +21,8 @@ def send_email_background(to_email: str, subject: str, body: str):
 
         msg.attach(MIMEText(body, 'html'))
 
+        smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
+        smtp_port = int(os.getenv("SMTP_PORT", "587"))
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
         server.login(sender_email, sender_password)

@@ -7,3 +7,4 @@ passlib[bcrypt]
 python-multipart
 openai
 python-dotenv
+groq
