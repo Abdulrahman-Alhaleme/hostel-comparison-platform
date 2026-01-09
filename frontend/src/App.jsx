@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -16,19 +17,22 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+        <div style={{ minHeight: 'calc(100vh - 100px)' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/compare" element={<Compare />} />
-            <Route path="/compare/:id" element={<Compare />} />
-            <Route path="/hotel/:id" element={<HotelDetails />} />
-          </Route>
-        </Routes>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/compare" element={<Compare />} />
+              <Route path="/compare/:id" element={<Compare />} />
+              <Route path="/hotel/:id" element={<HotelDetails />} />
+            </Route>
+          </Routes>
+        </div>
+        <Footer />
       </AuthProvider>
     </ThemeProvider>
   );
