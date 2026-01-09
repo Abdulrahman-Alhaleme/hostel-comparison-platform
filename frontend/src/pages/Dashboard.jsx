@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { Search, Filter, MapPin, Star, DollarSign, Phone, Globe, Wifi } from 'lucide-react';
 import { motion } from 'framer-motion';
+import './Dashboard.css';
 
 const Dashboard = () => {
     const { user, token, logout } = useAuth();
@@ -53,8 +54,8 @@ const Dashboard = () => {
     }, [search, country, minPrice, maxPrice, minRating, token, logout]);
 
     return (
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+        <div className="dashboard-container">
+            <header className="dashboard-header">
                 <div>
                     <h1 style={{ marginBottom: '0.5rem' }}>Dashboard</h1>
                     <p style={{ color: 'var(--text-muted)' }}>Welcome back, {user?.username}!</p>
@@ -70,10 +71,10 @@ const Dashboard = () => {
                     <Search size={22} /> Explore Hotels
                 </h2>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: '2rem' }}>
+                <div className="dashboard-grid">
 
                     {/* شريط الفلاتر الجانبي */}
-                    <div className="glass-panel" style={{ padding: '1.5rem', height: 'fit-content' }}>
+                    <div className="glass-panel filter-sidebar">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', color: 'var(--primary)' }}>
                             <Filter size={20} />
                             <h3 style={{ margin: 0 }}>Filters</h3>
@@ -127,30 +128,29 @@ const Dashboard = () => {
                         {loading ? (
                             <div className="glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>Loading hotels...</div>
                         ) : hostels.length > 0 ? (
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                            <div className="hotel-grid">
                                 {hostels.map((hostel, index) => (
                                     <motion.div
                                         key={hostel.id}
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: index * 0.05 }}
-                                        className="glass-panel"
+                                        className="glass-panel hotel-card"
                                         onClick={() => navigate(`/hotel/${hostel.id}`)}
-                                        style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', cursor: 'pointer' }}
                                         whileHover={{ y: -5, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
                                     >
-                                        <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                            <h3 style={{ marginBottom: '0.5rem', fontSize: '1.1rem' }}>{hostel.name}</h3>
+                                        <div className="hotel-card-content">
+                                            <h3 className="card-title">{hostel.name}</h3>
 
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                                            <div className="card-location">
                                                 <MapPin size={14} />
                                                 {hostel.address ? <span title={hostel.address} style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{hostel.address}</span> : `${hostel.city}, ${hostel.country}`}
                                             </div>
 
                                             {/* وسوم المرافق */}
-                                            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '0.8rem' }}>
+                                            <div className="card-tags">
                                                 {hostel.facilities && hostel.facilities.slice(0, 3).map((fac, i) => (
-                                                    <span key={i} style={{ fontSize: '0.75rem', background: 'var(--glass-border)', padding: '2px 6px', borderRadius: '4px', color: 'var(--text-muted)' }}>
+                                                    <span key={i} className="tag-badge">
                                                         {fac}
                                                     </span>
                                                 ))}
@@ -160,29 +160,29 @@ const Dashboard = () => {
                                             </div>
 
                                             {/* صف معلومات الاتصال */}
-                                            <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.8rem' }}>
+                                            <div className="contact-row">
                                                 {hostel.phone_number && (
-                                                    <a href={`tel:${hostel.phone_number}`} title={hostel.phone_number} style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.85rem', textDecoration: 'none' }}>
+                                                    <a href={`tel:${hostel.phone_number}`} title={hostel.phone_number} className="contact-link" style={{ color: 'var(--text-muted)' }}>
                                                         <Phone size={13} /> <span style={{ fontSize: '0.8rem' }}>Call</span>
                                                     </a>
                                                 )}
                                                 {hostel.website && (
-                                                    <a href={hostel.website} target="_blank" rel="noopener noreferrer" title="Visit Website" style={{ color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.85rem', textDecoration: 'none' }}>
+                                                    <a href={hostel.website} target="_blank" rel="noopener noreferrer" className="contact-link" title="Visit Website" style={{ color: 'var(--primary)' }}>
                                                         <Globe size={13} /> <span style={{ fontSize: '0.8rem' }}>Website</span>
                                                     </a>
                                                 )}
                                             </div>
 
-                                            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem', flex: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                            <p className="description-preview">
                                                 {hostel.description}
                                             </p>
 
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
-                                                <div style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                                            <div className="card-footer">
+                                                <div className="price-tag">
                                                     <DollarSign size={16} color="var(--primary)" />
                                                     {hostel.price_per_night}<span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>/night</span>
                                                 </div>
-                                                <div style={{ background: 'var(--glass-highlight)', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.85rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                                                <div className="rating-badge">
                                                     <Star size={14} fill="orange" color="orange" />
                                                     {hostel.rating}
                                                 </div>

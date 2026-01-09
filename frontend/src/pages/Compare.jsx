@@ -7,6 +7,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Download, Check, AlertCircle, X, Filter } from 'lucide-react';
+import './Compare.css';
 
 const Compare = () => {
     const { id } = useParams();
@@ -128,18 +129,11 @@ const Compare = () => {
         <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="glass-panel"
-            style={{ padding: '1.5rem', border: '2px solid var(--primary)', position: 'relative' }}
+            className="glass-panel hostel-selected-card"
         >
             <button
                 onClick={onRemove}
-                style={{
-                    position: 'absolute', top: '10px', right: '10px',
-                    background: 'var(--glass-highlight)', border: 'none',
-                    color: 'var(--text-main)', borderRadius: '50%',
-                    width: '30px', height: '30px', cursor: 'pointer',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center'
-                }}
+                className="remove-btn"
             >
                 ✕
             </button>
@@ -163,37 +157,22 @@ const Compare = () => {
         );
 
         return (
-            <div className="glass-panel" style={{ padding: '1.5rem', minHeight: '300px' }}>
+            <div className="glass-panel search-box">
                 <input
                     type="text"
                     placeholder={placeholder}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    style={{
-                        width: '100%',
-                        padding: '1rem',
-                        marginBottom: '1rem',
-                        background: 'var(--bg-input)',
-                        border: '1px solid var(--glass-border)',
-                        borderRadius: '8px',
-                        color: 'var(--text-main)',
-                        outline: 'none'
-                    }}
+                    className="search-input"
                 />
-                <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                <div className="search-results">
                     {filtered.length > 0 ? (
                         filtered.map(hostel => (
                             <motion.div
                                 key={hostel.id}
                                 whileHover={{ backgroundColor: 'var(--glass-highlight)' }}
                                 onClick={() => setSelection(hostel)}
-                                style={{
-                                    padding: '1rem',
-                                    borderBottom: '1px solid var(--glass-border)',
-                                    cursor: 'pointer',
-                                    borderRadius: '8px',
-                                    marginBottom: '0.5rem'
-                                }}
+                                className="search-result-item"
                             >
                                 <div style={{ fontWeight: 'bold' }}>{hostel.name}</div>
                                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between' }}>
@@ -213,14 +192,13 @@ const Compare = () => {
     };
 
     return (
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
-            <h1 style={{ marginBottom: '2rem' }}>Compare Hotels</h1>
+        <div className="compare-container">
+            <h1 className="compare-header">Compare Hotels</h1>
 
             <div style={{ marginBottom: '2rem' }}>
                 <button
-                    className="btn-secondary"
+                    className="btn-secondary filters-toggle"
                     onClick={() => setShowFilters(!showFilters)}
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                 >
                     <Filter size={18} /> Filters
                 </button>
@@ -229,10 +207,9 @@ const Compare = () => {
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="glass-panel"
-                        style={{ marginTop: '1rem', padding: '1.5rem', display: 'flex', gap: '2rem', alignItems: 'center' }}
+                        className="glass-panel filters-panel"
                     >
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div className="filter-group">
                             <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Min Price ($)</label>
                             <input
                                 type="number"
@@ -243,7 +220,7 @@ const Compare = () => {
                                 style={{ width: '150px' }}
                             />
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div className="filter-group">
                             <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Max Price ($)</label>
                             <input
                                 type="number"
@@ -254,7 +231,7 @@ const Compare = () => {
                                 style={{ width: '150px' }}
                             />
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div className="filter-group">
                             <label style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Min Rating (0-5)</label>
                             <input
                                 type="number"
@@ -278,7 +255,7 @@ const Compare = () => {
             </div>
 
             {!comparisonResult ? (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', alignItems: 'start' }}>
+                <div className="comparison-columns">
                     {/* العمود 1 - الولايات المتحدة */}
                     <div>
                         <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: 'var(--text-muted)' }}>United States</h2>
@@ -310,7 +287,7 @@ const Compare = () => {
             ) : null}
 
             {selection1 && selection2 && !comparisonResult && (
-                <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                <div className="compare-action">
                     <button onClick={handleCompare} className="btn-primary" disabled={loading} style={{ fontSize: '1.2rem', padding: '1rem 3rem' }}>
                         {loading ? 'Analyzing...' : 'Compare with AI'}
                     </button>
@@ -321,24 +298,23 @@ const Compare = () => {
             {comparisonResult && (
                 <motion.div
                     id="comparison-result"
-                    className="glass-panel"
+                    className="glass-panel comparison-result-panel"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    style={{ padding: '2rem', marginTop: '2rem' }}
                 >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                    <div className="result-header">
                         <h2>AI Analysis Result</h2>
                         <button onClick={exportPDF} className="btn-secondary" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                             <Download size={18} /> Export PDF
                         </button>
                     </div>
 
-                    <div style={{ display: 'grid', md: { gridTemplateColumns: '1fr 1fr' }, gap: '2rem', marginBottom: '2rem' }}>
-                        <div style={{ background: 'var(--glass-highlight)', padding: '1rem', borderRadius: '0.5rem' }}>
+                    <div className="analysis-grid">
+                        <div className="recommendation-box">
                             <h3 style={{ color: 'var(--primary)' }}>Recommendation</h3>
                             <p style={{ whiteSpace: 'pre-wrap' }}>{comparisonResult.recommendation}</p>
                         </div>
-                        <div style={{ height: 300 }}>
+                        <div className="chart-box">
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={chartData}>
                                     <XAxis dataKey="name" stroke="var(--text-muted)" />
@@ -359,23 +335,23 @@ const Compare = () => {
                         <h3 style={{ marginBottom: '1.5rem' }}>Detailed Analysis</h3>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
                             {comparisonResult.comparison_table && comparisonResult.comparison_table.length > 0 ? (
-                                <div className="glass-panel" style={{ gridColumn: '1 / -1', overflowX: 'auto', background: 'var(--glass-highlight)', padding: '0' }}>
-                                    <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                                <div className="glass-panel table-wrapper">
+                                    <table className="comparison-table">
                                         <thead>
-                                            <tr style={{ borderBottom: '1px solid var(--glass-border)' }}>
-                                                <th style={{ padding: '1.5rem', color: 'var(--primary)', width: '40%' }}>Feature / Advantage</th>
-                                                <th style={{ padding: '1.5rem', color: 'var(--text-main)', textAlign: 'center', width: '30%' }}>{selection1.name}</th>
-                                                <th style={{ padding: '1.5rem', color: 'var(--text-main)', textAlign: 'center', width: '30%' }}>{selection2.name}</th>
+                                            <tr>
+                                                <th>Feature / Advantage</th>
+                                                <th>{selection1.name}</th>
+                                                <th>{selection2.name}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {comparisonResult.comparison_table.map((row, idx) => (
-                                                <tr key={idx} style={{ borderBottom: '1px solid var(--glass-border)' }}>
-                                                    <td style={{ padding: '1.25rem 1.5rem' }}>
+                                                <tr key={idx}>
+                                                    <td>
                                                         <div style={{ fontWeight: 'bold', color: 'var(--text-main)', marginBottom: '0.25rem' }}>{row.feature}</div>
                                                         <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{row.details}</div>
                                                     </td>
-                                                    <td style={{ padding: '1.25rem', textAlign: 'center' }}>
+                                                    <td style={{ textAlign: 'center' }}>
                                                         {row.hostel1_has ?
                                                             <div style={{ display: 'inline-flex', padding: '0.5rem', borderRadius: '50%', background: 'rgba(34, 197, 94, 0.2)' }}>
                                                                 <Check color="#22c55e" size={28} strokeWidth={3} />
@@ -386,7 +362,7 @@ const Compare = () => {
                                                             </div>
                                                         }
                                                     </td>
-                                                    <td style={{ padding: '1.25rem', textAlign: 'center' }}>
+                                                    <td style={{ textAlign: 'center' }}>
                                                         {row.hostel2_has ?
                                                             <div style={{ display: 'inline-flex', padding: '0.5rem', borderRadius: '50%', background: 'rgba(34, 197, 94, 0.2)' }}>
                                                                 <Check color="#22c55e" size={28} strokeWidth={3} />

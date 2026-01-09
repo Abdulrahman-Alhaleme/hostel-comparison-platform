@@ -1,0 +1,140 @@
+.navbar {
+  margin: 1rem;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+}
+
+.nav-brand {
+    text-decoration: none;
+    color: var(--text-main);
+}
+
+.nav-brand h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    background: linear-gradient(to right, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-items {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-link:hover {
+    color: var(--primary);
+}
+
+.user-snippet {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar span {
+    font-weight: 700;
+    color: white;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.icon-btn:hover {
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .navbar {
+      padding: 1rem;
+  }
+
+  .mobile-menu-btn {
+      display: block;
+  }
+
+  .nav-items {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1rem;
+      margin-top: 0.5rem;
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1.5rem;
+      align-items: stretch; /* Make items take full width if needed, or stick to center */
+      
+      /* Animation */
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-lg);
+  }
+
+  .nav-items.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+  }
+
+  .nav-items .nav-link {
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 1.1rem;
+  }
+
+  .user-snippet {
+      justify-content: center;
+  }
+}
